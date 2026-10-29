@@ -15,9 +15,8 @@ from turtle import *
 from freegames import path
 
 car = path('car.gif')
-letters = 'ABCDEFGH'
-colors = ['red', 'blue', 'green', 'orange']
-tiles = [(l, c) for l in letters for c in colors] * 2
+letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZÑÁÉÍÓÚ'
+tiles = list(letters) * 2
 state = {'mark': None}
 hide = [True] * 64
 state = {'mark': None, 'taps': 0}
@@ -77,22 +76,18 @@ def draw():
             x, y = xy(count)
             square(x, y)
 
-    mark = state['mark']
+    for count in range(64):
+        if not hide[count] or count == state['mark']:
+            x, y = xy(count)
+            up()
+            goto(x + 25, y + 5)
+            color('black')
+            write(tiles[count], font=('Arial', 20, 'normal'), align='center')
 
-    if mark is not None and hide[mark]:
-        x, y = xy(mark)
-        letter, c = tiles[mark]
-        up()
-        goto(x + 25, y + 5)
-        color('black')
-        write(letter, font=('Arial', 20, 'normal'), align='center')
-
-
-        up()
+    up()
     goto(-200, 180)
     color('black')
     write(f"Taps: {state['taps']}", font=('Arial', 15, 'normal'))
-
 
     if not any(hide):
         up()
