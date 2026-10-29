@@ -15,7 +15,9 @@ from turtle import *
 from freegames import path
 
 car = path('car.gif')
-tiles = list(range(32)) * 2
+letters = 'ABCDEFGH'
+colors = ['red', 'blue', 'green', 'orange']
+tiles = [(l, c) for l in letters for c in colors] * 2
 state = {'mark': None}
 hide = [True] * 64
 state = {'mark': None, 'taps': 0}
@@ -84,6 +86,13 @@ def draw():
     goto(-200, 180)
     color('black')
     write(f"Taps: {state['taps']}", font=('Arial', 15, 'normal'))
+
+
+    if not any(hide):
+        up()
+        goto(-70, -10)
+        color('black')
+        write('You Win!', font=('Arial', 22, 'bold'))
 
     update()
     ontimer(draw, 100)
