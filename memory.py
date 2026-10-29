@@ -46,11 +46,15 @@ def xy(count):
 
 
 def tap(x, y):
-    """Update mark and hidden tiles based on tap."""
+    """Update mark and hidden tiles based on tap"""
+    spot = index(x, y)
+
+    if not (0 <= spot < 64):
+        return
+
     state['taps'] += 1
     print('Taps:', state['taps'])
 
-    spot = index(x, y)
     mark = state['mark']
 
     if mark is None or mark == spot or tiles[mark] != tiles[spot]:
@@ -77,10 +81,12 @@ def draw():
 
     if mark is not None and hide[mark]:
         x, y = xy(mark)
+        letter, c = tiles[mark]
         up()
         goto(x + 25, y + 5)
         color('black')
-        write(tiles[mark], font=('Arial', 30, 'normal', align='center')
+        write(letter, font=('Arial', 20, 'normal'), align='center')
+
 
         up()
     goto(-200, 180)
